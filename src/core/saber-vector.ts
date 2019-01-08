@@ -136,11 +136,7 @@ interface IVector<T = Vector2D | Vector3D> {
  * @implements {IVector<Vector2D>}
  */
 export class Vector2D implements IVector<Vector2D> {
-  x: number
-  y: number
-  constructor(x: number, y: number) {
-    this.x = x
-    this.y = y
+  constructor(public x: number, public y: number) {
   }
   props = () => ({ x: this.x, y: this.y })
   isEquals(vector2d: Vector2D) {
