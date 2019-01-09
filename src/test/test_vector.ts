@@ -28,6 +28,13 @@ export function test_vector() {
       .toVec()
       .props()
   )
+  // v.neg().neg()
+  console.log(
+    end2_3d
+      .neg()
+      .neg()
+      .isEquals(end2_3d)
+  ) // true
 
   // same to 2d
   let start_2d = new Vector2D(0, 0)
@@ -45,4 +52,10 @@ export function test_vector() {
       .toVec()
       .props()
   )
+  console.log(
+    end2_2d
+      .neg()
+      .neg()
+      .isEquals(end2_2d)
+  ) // true
 }

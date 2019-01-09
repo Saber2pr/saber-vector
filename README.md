@@ -15,6 +15,14 @@ let line1_3d = new Line3D(start_3d, end1_3d)
 let end2_3d = new Vector3D(0, 1, 1)
 let line2_3d = new Line3D(start_3d, end2_3d)
 
+// v.neg().neg()
+console.log(
+  end2_3d
+    .neg()
+    .neg()
+    .isEquals(end2_3d)
+) // true
+
 // get angle in two vectors?
 console.log(radToAngle(line1_3d.toVec().angleWith(line2_3d.toVec()))) // 45
 
@@ -45,4 +53,10 @@ console.log(
     .toVec()
     .props()
 )
+console.log(
+  end2_2d
+    .neg()
+    .neg()
+    .isEquals(end2_2d)
+) // true
 ```

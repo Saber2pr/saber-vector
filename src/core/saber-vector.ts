@@ -5,6 +5,13 @@
  * @Last Modified time: 2019-01-08 21:42:06
  */
 /**
+ * 0 => 0
+ * 1 => -1
+ *
+ * @param value
+ */
+export const negative = (value: number) => (value === 0 ? 0 : -1 * value)
+/**
  * 2 => 4
  * @param value
  */
@@ -174,7 +181,7 @@ export class Vector2D implements IVector<Vector2D> {
     return new Vector2D(this.x / vector.x, this.y / vector.y)
   }
   neg() {
-    return new Vector2D(-this.x, -this.y)
+    return new Vector2D(negative(this.x), negative(this.y))
   }
   mag() {
     return magnitude2d(this.x, this.y)
@@ -229,7 +236,7 @@ export class Vector3D implements IVector<Vector3D> {
     return new Vector3D(this.x / vector.x, this.y / vector.y, this.z / vector.z)
   }
   neg() {
-    return new Vector3D(-this.x, -this.y, -this.z)
+    return new Vector3D(negative(this.x), negative(this.y), negative(this.z))
   }
   mag() {
     return magnitude3d(this.x, this.y, this.z)

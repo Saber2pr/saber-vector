@@ -1,4 +1,11 @@
 /**
+ * 0 => 0
+ * 1 => -1
+ *
+ * @param value
+ */
+export declare const negative: (value: number) => number;
+/**
  * 2 => 4
  * @param value
  */
