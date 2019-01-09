@@ -128,7 +128,16 @@ interface IVector<V = Vector2D | Vector3D> {
    * @returns {number}
    * @memberof IVector
    */
-  product(vector: V): number
+  dot(vector: V): number
+  /**
+   * vec1 x vec2
+   *
+   * to Vector3d
+   * @param {V} vector
+   * @returns {Vector3D}
+   * @memberof IVector
+   */
+  cross(vector: V): Vector3D
   /**
    * return its unit
    *
@@ -171,10 +180,13 @@ export class Vector2D implements IVector<Vector2D> {
     return magnitude2d(this.x, this.y)
   }
   angleWith(vector: Vector2D) {
-    return Math.acos(this.product(vector) / (this.mag() * vector.mag()))
+    return Math.acos(this.dot(vector) / (this.mag() * vector.mag()))
   }
-  product(vector: Vector2D) {
+  dot(vector: Vector2D) {
     return this.x * vector.x + this.y * vector.y
+  }
+  cross(vector: Vector2D) {
+    return new Vector3D(0, 0, this.x * vector.y - this.y * vector.x)
   }
   unitized() {
     return new Vector2D(this.x / this.mag(), this.y / this.mag())
@@ -223,10 +235,17 @@ export class Vector3D implements IVector<Vector3D> {
     return magnitude3d(this.x, this.y, this.z)
   }
   angleWith(vector: Vector3D) {
-    return Math.acos(this.product(vector) / (this.mag() * vector.mag()))
+    return Math.acos(this.dot(vector) / (this.mag() * vector.mag()))
   }
-  product(vector: Vector3D) {
+  dot(vector: Vector3D) {
     return this.x * vector.x + this.y * vector.y + this.z * vector.z
+  }
+  cross(vector: Vector3D) {
+    return new Vector3D(
+      this.y * vector.z - this.z * vector.y,
+      this.z * vector.x - this.x * vector.z,
+      this.x * vector.y - this.y * vector.x
+    )
   }
   unitized() {
     return new Vector3D(

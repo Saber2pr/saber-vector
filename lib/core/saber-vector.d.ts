@@ -120,7 +120,16 @@ interface IVector<V = Vector2D | Vector3D> {
      * @returns {number}
      * @memberof IVector
      */
-    product(vector: V): number;
+    dot(vector: V): number;
+    /**
+     * vec1 x vec2
+     *
+     * to Vector3d
+     * @param {V} vector
+     * @returns {Vector3D}
+     * @memberof IVector
+     */
+    cross(vector: V): Vector3D;
     /**
      * return its unit
      *
@@ -152,7 +161,8 @@ export declare class Vector2D implements IVector<Vector2D> {
     neg(): Vector2D;
     mag(): number;
     angleWith(vector: Vector2D): number;
-    product(vector: Vector2D): number;
+    dot(vector: Vector2D): number;
+    cross(vector: Vector2D): Vector3D;
     unitized(): Vector2D;
 }
 /**
@@ -179,7 +189,8 @@ export declare class Vector3D implements IVector<Vector3D> {
     neg(): Vector3D;
     mag(): number;
     angleWith(vector: Vector3D): number;
-    product(vector: Vector3D): number;
+    dot(vector: Vector3D): number;
+    cross(vector: Vector3D): Vector3D;
     unitized(): Vector3D;
 }
 /**
