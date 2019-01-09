@@ -26,7 +26,7 @@ export declare const angleToRad: (angle: number) => number;
  */
 export declare const radToAngle: (rad: number) => number;
 /**
- * @interface Vector
+ * @interface IVector
  * @template V
  */
 interface IVector<V = Vector2D | Vector3D> {
@@ -184,6 +184,7 @@ export declare class Vector3D implements IVector<Vector3D> {
 }
 /**
  * @interface ILine
+ * @template L
  * @template V
  */
 interface ILine<L = Line2D | Line3D, V = Vector2D | Vector3D> {

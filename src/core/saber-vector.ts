@@ -34,7 +34,7 @@ export const angleToRad = (angle: number) => (angle * Math.PI) / 180
  */
 export const radToAngle = (rad: number) => (rad * 180) / Math.PI
 /**
- * @interface Vector
+ * @interface IVector
  * @template V
  */
 interface IVector<V = Vector2D | Vector3D> {
@@ -238,6 +238,7 @@ export class Vector3D implements IVector<Vector3D> {
 }
 /**
  * @interface ILine
+ * @template L
  * @template V
  */
 interface ILine<L = Line2D | Line3D, V = Vector2D | Vector3D> {
