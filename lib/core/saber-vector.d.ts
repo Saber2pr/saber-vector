@@ -27,9 +27,9 @@ export declare const angleToRad: (angle: number) => number;
 export declare const radToAngle: (rad: number) => number;
 /**
  * @interface Vector
- * @template T
+ * @template V
  */
-interface IVector<T = Vector2D | Vector3D> {
+interface IVector<V = Vector2D | Vector3D> {
     x: number;
     y: number;
     z?: number;
@@ -46,50 +46,58 @@ interface IVector<T = Vector2D | Vector3D> {
     /**
      * isEquals
      *
-     * @param {T} vector
+     * @param {V} vector
      * @returns {boolean}
      * @memberof IVector
      */
-    isEquals(vector: T): boolean;
+    isEquals(vector: V): boolean;
     /**
      * +
      *
-     * @param {T} vector
-     * @returns {T}
+     * @param {V} vector
+     * @returns {V}
      * @memberof IVector
      */
-    add(vector: T): T;
+    add(vector: V): V;
     /**
      * -
      *
-     * @param {T} vector
-     * @returns {T}
+     * @param {V} vector
+     * @returns {V}
      * @memberof IVector
      */
-    sub(vector: T): T;
+    sub(vector: V): V;
     /**
      * *
      *
-     * @param {T} vector
-     * @returns {T}
+     * @param {V} vector
+     * @returns {V}
      * @memberof IVector
      */
-    mul(vector: T): T;
+    mul(vector: V): V;
+    /**
+     * 1 --x2--> 2
+     *
+     * @param {number} value
+     * @returns {V}
+     * @memberof IVector
+     */
+    scale(value: number): V;
     /**
      * /
      *
-     * @param {T} vector
-     * @returns {T}
+     * @param {V} vector
+     * @returns {V}
      * @memberof IVector
      */
-    div(vector: T): T;
+    div(vector: V): V;
     /**
      * return -1 * self
      *
-     * @returns {T}
+     * @returns {V}
      * @memberof IVector
      */
-    neg(): T;
+    neg(): V;
     /**
      * length
      *
@@ -100,27 +108,27 @@ interface IVector<T = Vector2D | Vector3D> {
     /**
      * angle by vector
      *
-     * @param {T} vector
+     * @param {V} vector
      * @returns {number}
      * @memberof IVector
      */
-    angleWith(vector: T): number;
+    angleWith(vector: V): number;
     /**
      * vec1 . vec2
      *
-     * @param {T} vector
+     * @param {V} vector
      * @returns {number}
      * @memberof IVector
      */
-    product(vector: T): number;
+    product(vector: V): number;
     /**
      * return its unit
      *
-     * @param {T} vector
-     * @returns {T}
+     * @param {V} vector
+     * @returns {V}
      * @memberof IVector
      */
-    unitized(vector: T): T;
+    unitized(vector: V): V;
 }
 /**
  * @export
@@ -139,6 +147,7 @@ export declare class Vector2D implements IVector<Vector2D> {
     add(vector: Vector2D): Vector2D;
     sub(vector: Vector2D): Vector2D;
     mul(vector: Vector2D): Vector2D;
+    scale(value: number): Vector2D;
     div(vector: Vector2D): Vector2D;
     neg(): Vector2D;
     mag(): number;
@@ -165,6 +174,7 @@ export declare class Vector3D implements IVector<Vector3D> {
     add(vector3d: Vector3D): Vector3D;
     sub(vector3d: Vector3D): Vector3D;
     mul(vector: Vector3D): Vector3D;
+    scale(value: number): Vector3D;
     div(vector: Vector3D): Vector3D;
     neg(): Vector3D;
     mag(): number;
@@ -174,37 +184,49 @@ export declare class Vector3D implements IVector<Vector3D> {
 }
 /**
  * @interface ILine
- * @template T
+ * @template V
  */
-interface ILine<T = Vector2D | Vector3D> {
-    start: T;
-    end: T;
+interface ILine<L = Line2D | Line3D, V = Vector2D | Vector3D> {
+    start: V;
+    end: V;
     /**
      * return projection-self on line-target
      *
-     * @param {this} line
-     * @returns {Line}
+     * @param {L} line
+     * @returns {L}
      * @memberof ILine
      */
-    projection(line: this): Line;
+    projection(line: L): L;
     /**
-     *return its vector, from start to end
+     * return its vector, from start to end
      *
-     * @returns {Vector3D}
+     * @returns {V}
      * @memberof ILine
      */
-    toVec(): Vector3D;
+    toVec(): V;
 }
 /**
  * @export
- * @class Line
- * @implements {ILine<Vector3D>}
+ * @class Line2D
+ * @implements {ILine<Line2D, Vector2D>}
  */
-export declare class Line implements ILine<Vector3D> {
+export declare class Line2D implements ILine<Line2D, Vector2D> {
+    start: Vector2D;
+    end: Vector2D;
+    constructor(start: Vector2D, end: Vector2D);
+    projection(line: Line2D): Line2D;
+    toVec(): Vector2D;
+}
+/**
+ * @export
+ * @class Line3D
+ * @implements {ILine<Line3D, Vector3D>}
+ */
+export declare class Line3D implements ILine<Line3D, Vector3D> {
     start: Vector3D;
     end: Vector3D;
     constructor(start: Vector3D, end: Vector3D);
-    projection(line: Line): Line;
+    projection(line: Line3D): Line3D;
     toVec(): Vector3D;
 }
 export {};
