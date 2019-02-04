@@ -1,6 +1,6 @@
 {
   "name": "saber-vector",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "math/vector lib for javascript!",
   "repository": {
     "type": "git",
@@ -11,7 +11,6 @@
   "main": "./lib/index.js",
   "scripts": {
     "start": "tsc --watch",
-    "dev": "webpack --watch",
     "test": "node ./lib/test/test.js"
   },
   "devDependencies": {
