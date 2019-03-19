@@ -1,18 +1,18 @@
 import {
-  Vector3D,
+  Vec3,
   Line3D,
   radToAngle,
-  Vector2D,
+  Vec2,
   Line2D
 } from '../core/saber-vector'
 
 export function test_vector() {
-  let start_3d = new Vector3D(0, 0, 0)
+  let start_3d = new Vec3(0, 0, 0)
 
-  let end1_3d = new Vector3D(0, 1, 0)
+  let end1_3d = new Vec3(0, 1, 0)
   let line1_3d = new Line3D(start_3d, end1_3d)
 
-  let end2_3d = new Vector3D(0, 1, 1)
+  let end2_3d = new Vec3(0, 1, 1)
   let line2_3d = new Line3D(start_3d, end2_3d)
 
   // get angle in two vectors?
@@ -33,16 +33,16 @@ export function test_vector() {
     end2_3d
       .neg()
       .neg()
-      .isEquals(end2_3d)
+      .equals(end2_3d)
   ) // true
 
   // same to 2d
-  let start_2d = new Vector2D(0, 0)
+  let start_2d = new Vec2(0, 0)
 
-  let end1_2d = new Vector2D(0, 1)
+  let end1_2d = new Vec2(0, 1)
   let line1_2d = new Line2D(start_2d, end1_2d)
 
-  let end2_2d = new Vector2D(1, 1)
+  let end2_2d = new Vec2(1, 1)
   let line2_2d = new Line2D(start_2d, end2_2d)
 
   console.log('2d: ', radToAngle(line1_2d.toVec().angleWith(line2_2d.toVec())))
@@ -56,6 +56,6 @@ export function test_vector() {
     end2_2d
       .neg()
       .neg()
-      .isEquals(end2_2d)
+      .equals(end2_2d)
   ) // true
 }

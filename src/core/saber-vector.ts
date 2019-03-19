@@ -44,7 +44,7 @@ export const radToAngle = (rad: number) => (rad * 180) / Math.PI
  * @interface IVector
  * @template V
  */
-interface IVector<V = Vector2D | Vector3D> {
+interface IVector<V = Vec2 | Vec3> {
   x: number
   y: number
   z?: number
@@ -65,7 +65,7 @@ interface IVector<V = Vector2D | Vector3D> {
    * @returns {boolean}
    * @memberof IVector
    */
-  isEquals(vector: V): boolean
+  equals(vector: V): boolean
   /**
    * +
    *
@@ -141,10 +141,10 @@ interface IVector<V = Vector2D | Vector3D> {
    *
    * to Vector3d
    * @param {V} vector
-   * @returns {Vector3D}
+   * @returns {Vec3}
    * @memberof IVector
    */
-  cross(vector: V): Vector3D
+  cross(vector: V): Vec3
   /**
    * return its unit
    *
@@ -159,44 +159,59 @@ interface IVector<V = Vector2D | Vector3D> {
  * @class Vector2D
  * @implements {IVector<Vector2D>}
  */
-export class Vector2D implements IVector<Vector2D> {
+export class Vec2 implements IVector<Vec2> {
   constructor(public x: number, public y: number) {}
   props = () => ({ x: this.x, y: this.y })
-  isEquals(vector2d: Vector2D) {
-    return vector2d.x === this.x && vector2d.y === this.y
+  equals(v2: Vec2) {
+    return v2.x === this.x && v2.y === this.y
   }
-  add(vector: Vector2D) {
-    return new Vector2D(this.x + vector.x, this.y + vector.y)
+  add(vector: Vec2) {
+    return new Vec2(this.x + vector.x, this.y + vector.y)
   }
-  sub(vector: Vector2D) {
-    return new Vector2D(this.x - vector.x, this.y - vector.y)
+  sub(vector: Vec2) {
+    return new Vec2(this.x - vector.x, this.y - vector.y)
   }
-  mul(vector: Vector2D) {
-    return new Vector2D(this.x * vector.x, this.y * vector.y)
+  mul(vector: Vec2) {
+    return new Vec2(this.x * vector.x, this.y * vector.y)
   }
   scale(value: number) {
-    return this.mul(new Vector2D(value, value))
+    return this.mul(new Vec2(value, value))
   }
-  div(vector: Vector2D) {
-    return new Vector2D(this.x / vector.x, this.y / vector.y)
+  div(vector: Vec2) {
+    return new Vec2(this.x / vector.x, this.y / vector.y)
   }
   neg() {
-    return new Vector2D(negative(this.x), negative(this.y))
+    return new Vec2(negative(this.x), negative(this.y))
   }
   mag() {
     return magnitude2d(this.x, this.y)
   }
-  angleWith(vector: Vector2D) {
+  angleWith(vector: Vec2) {
     return Math.acos(this.dot(vector) / (this.mag() * vector.mag()))
   }
-  dot(vector: Vector2D) {
+  dot(vector: Vec2) {
     return this.x * vector.x + this.y * vector.y
   }
-  cross(vector: Vector2D) {
-    return new Vector3D(0, 0, this.x * vector.y - this.y * vector.x)
+  cross(vector: Vec2) {
+    return new Vec3(0, 0, this.x * vector.y - this.y * vector.x)
   }
   unitized() {
-    return new Vector2D(this.x / this.mag(), this.y / this.mag())
+    return new Vec2(this.x / this.mag(), this.y / this.mag())
+  }
+}
+/**
+ * v2
+ *
+ * @export
+ * @param {(Vec2 | number)} x
+ * @param {number} [y]
+ * @returns
+ */
+export function v2(x: Vec2 | number, y?: number) {
+  if (typeof x === 'object') {
+    return new Vec2(x.x, x.y)
+  } else {
+    return new Vec2(x, y || x)
   }
 }
 /**
@@ -204,58 +219,56 @@ export class Vector2D implements IVector<Vector2D> {
  * @class Vector3D
  * @implements {IVector<Vector3D>}
  */
-export class Vector3D implements IVector<Vector3D> {
+export class Vec3 implements IVector<Vec3> {
   constructor(public x: number, public y: number, public z: number) {}
   props = () => ({ x: this.x, y: this.y, z: this.z })
-  isEquals(vector3d: Vector3D) {
-    return (
-      this.x === vector3d.x && this.y === vector3d.y && this.z === vector3d.z
-    )
+  equals(v3: Vec3) {
+    return this.x === v3.x && this.y === v3.y && this.z === v3.z
   }
-  add(vector3d: Vector3D) {
-    return new Vector3D(
+  add(vector3d: Vec3) {
+    return new Vec3(
       this.x + vector3d.x,
       this.y + vector3d.y,
       this.z + vector3d.z
     )
   }
-  sub(vector3d: Vector3D) {
-    return new Vector3D(
+  sub(vector3d: Vec3) {
+    return new Vec3(
       this.x - vector3d.x,
       this.y - vector3d.y,
       this.z - vector3d.z
     )
   }
-  mul(vector: Vector3D) {
-    return new Vector3D(this.x * vector.x, this.y * vector.y, this.z * vector.z)
+  mul(vector: Vec3) {
+    return new Vec3(this.x * vector.x, this.y * vector.y, this.z * vector.z)
   }
   scale(value: number) {
-    return this.mul(new Vector3D(value, value, value))
+    return this.mul(new Vec3(value, value, value))
   }
-  div(vector: Vector3D) {
-    return new Vector3D(this.x / vector.x, this.y / vector.y, this.z / vector.z)
+  div(vector: Vec3) {
+    return new Vec3(this.x / vector.x, this.y / vector.y, this.z / vector.z)
   }
   neg() {
-    return new Vector3D(negative(this.x), negative(this.y), negative(this.z))
+    return new Vec3(negative(this.x), negative(this.y), negative(this.z))
   }
   mag() {
     return magnitude3d(this.x, this.y, this.z)
   }
-  angleWith(vector: Vector3D) {
+  angleWith(vector: Vec3) {
     return Math.acos(this.dot(vector) / (this.mag() * vector.mag()))
   }
-  dot(vector: Vector3D) {
+  dot(vector: Vec3) {
     return this.x * vector.x + this.y * vector.y + this.z * vector.z
   }
-  cross(vector: Vector3D) {
-    return new Vector3D(
+  cross(vector: Vec3) {
+    return new Vec3(
       this.y * vector.z - this.z * vector.y,
       this.z * vector.x - this.x * vector.z,
       this.x * vector.y - this.y * vector.x
     )
   }
   unitized() {
-    return new Vector3D(
+    return new Vec3(
       this.x / this.mag(),
       this.y / this.mag(),
       this.z / this.mag()
@@ -267,7 +280,7 @@ export class Vector3D implements IVector<Vector3D> {
  * @template L
  * @template V
  */
-interface ILine<L = Line2D | Line3D, V = Vector2D | Vector3D> {
+interface ILine<L = Line2D | Line3D, V = Vec2 | Vec3> {
   start: V
   end: V
   /**
@@ -291,8 +304,8 @@ interface ILine<L = Line2D | Line3D, V = Vector2D | Vector3D> {
  * @class Line2D
  * @implements {ILine<Line2D, Vector2D>}
  */
-export class Line2D implements ILine<Line2D, Vector2D> {
-  constructor(public start: Vector2D, public end: Vector2D) {}
+export class Line2D implements ILine<Line2D, Vec2> {
+  constructor(public start: Vec2, public end: Vec2) {}
   projection(line: Line2D) {
     let angle = this.toVec().angleWith(line.toVec())
     let length = this.toVec().mag() * Math.cos(angle)
@@ -308,8 +321,8 @@ export class Line2D implements ILine<Line2D, Vector2D> {
  * @class Line3D
  * @implements {ILine<Line3D, Vector3D>}
  */
-export class Line3D implements ILine<Line3D, Vector3D> {
-  constructor(public start: Vector3D, public end: Vector3D) {}
+export class Line3D implements ILine<Line3D, Vec3> {
+  constructor(public start: Vec3, public end: Vec3) {}
   projection(line: Line3D) {
     let angle = this.toVec().angleWith(line.toVec())
     let length = this.toVec().mag() * Math.cos(angle)
